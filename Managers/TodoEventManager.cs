@@ -26,15 +26,15 @@ namespace TuiDui
         {
             if (_todos == null) LoadTodos();
             return _todos.Select(t => t.IsComplete
-                ? $"[x] {t.Title} (Due: {t.Date:MM/dd})"
-                : $"[ ] {t.Title} (Due: {t.Date:MM/dd})").ToList();
+                ? $"[x] (Due: {t.Date:MM/dd}) {t.Title}"
+                : $"[ ] (Due: {t.Date:MM/dd}) {t.Title}").ToList();
         }
 
         public string FormatTodoForDisplay(TodoItem todo)
         {
             return todo.IsComplete
-                ? $"[x] {todo.Title} (Due: {todo.Date:MM/dd})"
-                : $"[ ] {todo.Title} (Due: {todo.Date:MM/dd})";
+                ? $"[x] (Due: {todo.Date:MM/dd}) {todo.Title}"
+                : $"[ ] (Due: {todo.Date:MM/dd}) {todo.Title}";
         }
 
         public void SaveTodos()

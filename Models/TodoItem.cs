@@ -1,6 +1,6 @@
 namespace TuiDui
 {
-    public class TodoItem
+    public class TodoItem : ISelectableItem
     {
         public string Title { get; set; }
         public DateTime? Date { get; set; }

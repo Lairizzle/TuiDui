@@ -27,15 +27,15 @@ namespace TuiDui {
         
         private Terminal.Gui.ColorScheme blueOnBlackText;
         
-        private Terminal.Gui.FrameView frameView;
+        private Terminal.Gui.FrameView noteListFrame;
         
-        private Terminal.Gui.ListView notesListEvents;
+        private Terminal.Gui.ListView noteListEvents;
         
-        private Terminal.Gui.FrameView frameView2;
+        private Terminal.Gui.FrameView noteEntryFrame;
         
         private Terminal.Gui.TextView noteTextField;
         
-        private Terminal.Gui.FrameView frameView4;
+        private Terminal.Gui.FrameView toDoEntry;
         
         private Terminal.Gui.Label label;
         
@@ -49,7 +49,7 @@ namespace TuiDui {
         
         private Terminal.Gui.Button updateTodoEvent;
         
-        private Terminal.Gui.FrameView frameView3;
+        private Terminal.Gui.FrameView toDoFrame;
         
         private Terminal.Gui.ListView todoListEvents;
         
@@ -57,31 +57,36 @@ namespace TuiDui {
         
         private Terminal.Gui.StatusItem f1EditMe;
         
-        private Terminal.Gui.Button button1;
-        
         private Terminal.Gui.MenuBar menuBar;
         
-        private Terminal.Gui.MenuBarItem fileF9Menu;
+        private Terminal.Gui.MenuBarItem fileMenu;
         
         private Terminal.Gui.MenuItem editMeMenuItem;
         
+        private Terminal.Gui.MenuBarItem editMenu;
+        
+        private Terminal.Gui.MenuItem editMeMenuItem2;
+        
+        private Terminal.Gui.MenuBarItem helpMenu;
+        
+        private Terminal.Gui.MenuItem editMeMenuItem3;
+        
         private void InitializeComponent() {
             this.menuBar = new Terminal.Gui.MenuBar();
-            this.button1 = new Terminal.Gui.Button();
             this.statusBar = new Terminal.Gui.StatusBar();
             this.todoListEvents = new Terminal.Gui.ListView();
-            this.frameView3 = new Terminal.Gui.FrameView();
+            this.toDoFrame = new Terminal.Gui.FrameView();
             this.updateTodoEvent = new Terminal.Gui.Button();
             this.addTodoEvent = new Terminal.Gui.Button();
             this.todoEventText = new Terminal.Gui.TextField();
             this.label2 = new Terminal.Gui.Label();
             this.todoDateText = new Terminal.Gui.TextView();
             this.label = new Terminal.Gui.Label();
-            this.frameView4 = new Terminal.Gui.FrameView();
+            this.toDoEntry = new Terminal.Gui.FrameView();
             this.noteTextField = new Terminal.Gui.TextView();
-            this.frameView2 = new Terminal.Gui.FrameView();
-            this.notesListEvents = new Terminal.Gui.ListView();
-            this.frameView = new Terminal.Gui.FrameView();
+            this.noteEntryFrame = new Terminal.Gui.FrameView();
+            this.noteListEvents = new Terminal.Gui.ListView();
+            this.noteListFrame = new Terminal.Gui.FrameView();
             this.tgDefault = new Terminal.Gui.ColorScheme();
             this.tgDefault.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.White, Terminal.Gui.Color.Blue);
             this.tgDefault.HotNormal = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightCyan, Terminal.Gui.Color.Blue);
@@ -133,84 +138,84 @@ namespace TuiDui {
             this.Border.DrawMarginFrame = true;
             this.TextAlignment = Terminal.Gui.TextAlignment.Left;
             this.Title = "";
-            this.frameView.Width = 25;
-            this.frameView.Height = 47;
-            this.frameView.X = 1;
-            this.frameView.Y = 1;
-            this.frameView.Visible = true;
-            this.frameView.Data = "frameView";
-            this.frameView.Border.BorderStyle = Terminal.Gui.BorderStyle.Single;
-            this.frameView.Border.Effect3D = false;
-            this.frameView.Border.Effect3DBrush = null;
-            this.frameView.Border.DrawMarginFrame = true;
-            this.frameView.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameView.Title = "Notes";
-            this.Add(this.frameView);
-            this.notesListEvents.Width = 22;
-            this.notesListEvents.Height = 3;
-            this.notesListEvents.X = 0;
-            this.notesListEvents.Y = 0;
-            this.notesListEvents.Visible = true;
-            this.notesListEvents.Data = "notesListEvents";
-            this.notesListEvents.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.notesListEvents.Source = new Terminal.Gui.ListWrapper(new string[] {
+            this.noteListFrame.Width = 25;
+            this.noteListFrame.Height = 47;
+            this.noteListFrame.X = 1;
+            this.noteListFrame.Y = 1;
+            this.noteListFrame.Visible = true;
+            this.noteListFrame.Data = "noteListFrame";
+            this.noteListFrame.Border.BorderStyle = Terminal.Gui.BorderStyle.Single;
+            this.noteListFrame.Border.Effect3D = false;
+            this.noteListFrame.Border.Effect3DBrush = null;
+            this.noteListFrame.Border.DrawMarginFrame = true;
+            this.noteListFrame.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.noteListFrame.Title = "Notes";
+            this.Add(this.noteListFrame);
+            this.noteListEvents.Width = 21;
+            this.noteListEvents.Height = 3;
+            this.noteListEvents.X = 1;
+            this.noteListEvents.Y = 0;
+            this.noteListEvents.Visible = true;
+            this.noteListEvents.Data = "noteListEvents";
+            this.noteListEvents.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.noteListEvents.Source = new Terminal.Gui.ListWrapper(new string[] {
                         "Item1",
                         "Item2",
                         "Item3"});
-            this.notesListEvents.AllowsMarking = false;
-            this.notesListEvents.AllowsMultipleSelection = true;
-            this.frameView.Add(this.notesListEvents);
-            this.frameView2.Width = 80;
-            this.frameView2.Height = 46;
-            this.frameView2.X = 27;
-            this.frameView2.Y = 1;
-            this.frameView2.Visible = true;
-            this.frameView2.Data = "frameView2";
-            this.frameView2.Border.BorderStyle = Terminal.Gui.BorderStyle.Single;
-            this.frameView2.Border.Effect3D = false;
-            this.frameView2.Border.Effect3DBrush = null;
-            this.frameView2.Border.DrawMarginFrame = true;
-            this.frameView2.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameView2.Title = "Editor";
-            this.Add(this.frameView2);
-            this.noteTextField.Width = 49;
-            this.noteTextField.Height = 16;
-            this.noteTextField.X = 0;
+            this.noteListEvents.AllowsMarking = false;
+            this.noteListEvents.AllowsMultipleSelection = true;
+            this.noteListFrame.Add(this.noteListEvents);
+            this.noteEntryFrame.Width = 80;
+            this.noteEntryFrame.Height = 46;
+            this.noteEntryFrame.X = 27;
+            this.noteEntryFrame.Y = 1;
+            this.noteEntryFrame.Visible = true;
+            this.noteEntryFrame.Data = "noteEntryFrame";
+            this.noteEntryFrame.Border.BorderStyle = Terminal.Gui.BorderStyle.Single;
+            this.noteEntryFrame.Border.Effect3D = false;
+            this.noteEntryFrame.Border.Effect3DBrush = null;
+            this.noteEntryFrame.Border.DrawMarginFrame = true;
+            this.noteEntryFrame.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.noteEntryFrame.Title = "Editor";
+            this.Add(this.noteEntryFrame);
+            this.noteTextField.Width = 76;
+            this.noteTextField.Height = 44;
+            this.noteTextField.X = 1;
             this.noteTextField.Y = 0;
             this.noteTextField.Visible = true;
             this.noteTextField.ColorScheme = this.blueOnBlackText;
-            this.noteTextField.AllowsTab = true;
+            this.noteTextField.AllowsTab = false;
             this.noteTextField.AllowsReturn = true;
             this.noteTextField.WordWrap = true;
             this.noteTextField.Data = "noteTextField";
-            this.noteTextField.Text = "Heya";
+            this.noteTextField.Text = "";
             this.noteTextField.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameView2.Add(this.noteTextField);
-            this.frameView4.Width = 102;
-            this.frameView4.Height = 6;
-            this.frameView4.X = 108;
-            this.frameView4.Y = 1;
-            this.frameView4.Visible = true;
-            this.frameView4.Data = "frameView4";
-            this.frameView4.Border.BorderStyle = Terminal.Gui.BorderStyle.Single;
-            this.frameView4.Border.Effect3D = false;
-            this.frameView4.Border.Effect3DBrush = null;
-            this.frameView4.Border.DrawMarginFrame = true;
-            this.frameView4.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameView4.Title = "Add/Remove To-Do";
-            this.Add(this.frameView4);
+            this.noteEntryFrame.Add(this.noteTextField);
+            this.toDoEntry.Width = 102;
+            this.toDoEntry.Height = 6;
+            this.toDoEntry.X = 108;
+            this.toDoEntry.Y = 1;
+            this.toDoEntry.Visible = true;
+            this.toDoEntry.Data = "toDoEntry";
+            this.toDoEntry.Border.BorderStyle = Terminal.Gui.BorderStyle.Single;
+            this.toDoEntry.Border.Effect3D = false;
+            this.toDoEntry.Border.Effect3DBrush = null;
+            this.toDoEntry.Border.DrawMarginFrame = true;
+            this.toDoEntry.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.toDoEntry.Title = "Add/Remove To-Do";
+            this.Add(this.toDoEntry);
             this.label.Width = 7;
             this.label.Height = 1;
-            this.label.X = 0;
+            this.label.X = 1;
             this.label.Y = 0;
             this.label.Visible = true;
             this.label.Data = "label";
             this.label.Text = "Date:";
             this.label.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameView4.Add(this.label);
+            this.toDoEntry.Add(this.label);
             this.todoDateText.Width = 10;
             this.todoDateText.Height = 1;
-            this.todoDateText.X = 8;
+            this.todoDateText.X = 9;
             this.todoDateText.Y = 0;
             this.todoDateText.Visible = true;
             this.todoDateText.ColorScheme = this.blueOnBlackText;
@@ -220,19 +225,19 @@ namespace TuiDui {
             this.todoDateText.Data = "todoDateText";
             this.todoDateText.Text = "MM/DD/YYYY";
             this.todoDateText.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameView4.Add(this.todoDateText);
+            this.toDoEntry.Add(this.todoDateText);
             this.label2.Width = 5;
             this.label2.Height = 1;
-            this.label2.X = 0;
+            this.label2.X = 1;
             this.label2.Y = 1;
             this.label2.Visible = true;
             this.label2.Data = "label2";
             this.label2.Text = "Event:";
             this.label2.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameView4.Add(this.label2);
-            this.todoEventText.Width = 48;
-            this.todoEventText.Height = 2;
-            this.todoEventText.X = 8;
+            this.toDoEntry.Add(this.label2);
+            this.todoEventText.Width = 83;
+            this.todoEventText.Height = 1;
+            this.todoEventText.X = 9;
             this.todoEventText.Y = 1;
             this.todoEventText.Visible = true;
             this.todoEventText.ColorScheme = this.blueOnBlackText;
@@ -240,43 +245,43 @@ namespace TuiDui {
             this.todoEventText.Data = "todoEventText";
             this.todoEventText.Text = "";
             this.todoEventText.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameView4.Add(this.todoEventText);
+            this.toDoEntry.Add(this.todoEventText);
             this.addTodoEvent.Width = 9;
             this.addTodoEvent.Height = 2;
-            this.addTodoEvent.X = -1;
+            this.addTodoEvent.X = 0;
             this.addTodoEvent.Y = 3;
             this.addTodoEvent.Visible = true;
             this.addTodoEvent.Data = "addTodoEvent";
             this.addTodoEvent.Text = "Add";
             this.addTodoEvent.TextAlignment = Terminal.Gui.TextAlignment.Centered;
             this.addTodoEvent.IsDefault = false;
-            this.frameView4.Add(this.addTodoEvent);
+            this.toDoEntry.Add(this.addTodoEvent);
             this.updateTodoEvent.Width = 10;
             this.updateTodoEvent.Height = 1;
-            this.updateTodoEvent.X = 8;
+            this.updateTodoEvent.X = 9;
             this.updateTodoEvent.Y = 3;
             this.updateTodoEvent.Visible = true;
             this.updateTodoEvent.Data = "updateTodoEvent";
             this.updateTodoEvent.Text = "Update";
             this.updateTodoEvent.TextAlignment = Terminal.Gui.TextAlignment.Centered;
             this.updateTodoEvent.IsDefault = false;
-            this.frameView4.Add(this.updateTodoEvent);
-            this.frameView3.Width = 102;
-            this.frameView3.Height = 10;
-            this.frameView3.X = 108;
-            this.frameView3.Y = 7;
-            this.frameView3.Visible = true;
-            this.frameView3.Data = "frameView3";
-            this.frameView3.Border.BorderStyle = Terminal.Gui.BorderStyle.Single;
-            this.frameView3.Border.Effect3D = false;
-            this.frameView3.Border.Effect3DBrush = null;
-            this.frameView3.Border.DrawMarginFrame = true;
-            this.frameView3.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameView3.Title = "To-Do";
-            this.Add(this.frameView3);
-            this.todoListEvents.Width = 39;
-            this.todoListEvents.Height = 8;
-            this.todoListEvents.X = 0;
+            this.toDoEntry.Add(this.updateTodoEvent);
+            this.toDoFrame.Width = 102;
+            this.toDoFrame.Height = 13;
+            this.toDoFrame.X = 108;
+            this.toDoFrame.Y = 7;
+            this.toDoFrame.Visible = true;
+            this.toDoFrame.Data = "toDoFrame";
+            this.toDoFrame.Border.BorderStyle = Terminal.Gui.BorderStyle.Single;
+            this.toDoFrame.Border.Effect3D = false;
+            this.toDoFrame.Border.Effect3DBrush = null;
+            this.toDoFrame.Border.DrawMarginFrame = true;
+            this.toDoFrame.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.toDoFrame.Title = "To-Do List";
+            this.Add(this.toDoFrame);
+            this.todoListEvents.Width = 98;
+            this.todoListEvents.Height = 11;
+            this.todoListEvents.X = 1;
             this.todoListEvents.Y = 0;
             this.todoListEvents.Visible = true;
             this.todoListEvents.Data = "todoListEvents";
@@ -287,7 +292,7 @@ namespace TuiDui {
                         "Item3"});
             this.todoListEvents.AllowsMarking = false;
             this.todoListEvents.AllowsMultipleSelection = true;
-            this.frameView3.Add(this.todoListEvents);
+            this.toDoFrame.Add(this.todoListEvents);
             this.statusBar.Width = Dim.Fill(0);
             this.statusBar.Height = 1;
             this.statusBar.X = 0;
@@ -300,16 +305,6 @@ namespace TuiDui {
             this.statusBar.Items = new Terminal.Gui.StatusItem[] {
                     this.f1EditMe};
             this.Add(this.statusBar);
-            this.button1.Width = 53;
-            this.button1.Height = 1;
-            this.button1.X = 181;
-            this.button1.Y = 48;
-            this.button1.Visible = true;
-            this.button1.Data = "button1";
-            this.button1.Text = "Heya";
-            this.button1.TextAlignment = Terminal.Gui.TextAlignment.Centered;
-            this.button1.IsDefault = false;
-            this.Add(this.button1);
             this.menuBar.Width = Dim.Fill(0);
             this.menuBar.Height = 1;
             this.menuBar.X = 0;
@@ -318,15 +313,31 @@ namespace TuiDui {
             this.menuBar.ColorScheme = this.blueOnBlack;
             this.menuBar.Data = "menuBar";
             this.menuBar.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.fileF9Menu = new Terminal.Gui.MenuBarItem();
-            this.fileF9Menu.Title = "_File (F9)";
+            this.fileMenu = new Terminal.Gui.MenuBarItem();
+            this.fileMenu.Title = "_File";
             this.editMeMenuItem = new Terminal.Gui.MenuItem();
             this.editMeMenuItem.Title = "Edit Me";
             this.editMeMenuItem.Data = "editMeMenuItem";
-            this.fileF9Menu.Children = new Terminal.Gui.MenuItem[] {
+            this.fileMenu.Children = new Terminal.Gui.MenuItem[] {
                     this.editMeMenuItem};
+            this.editMenu = new Terminal.Gui.MenuBarItem();
+            this.editMenu.Title = "_Edit";
+            this.editMeMenuItem2 = new Terminal.Gui.MenuItem();
+            this.editMeMenuItem2.Title = "Edit Me";
+            this.editMeMenuItem2.Data = "editMeMenuItem2";
+            this.editMenu.Children = new Terminal.Gui.MenuItem[] {
+                    this.editMeMenuItem2};
+            this.helpMenu = new Terminal.Gui.MenuBarItem();
+            this.helpMenu.Title = "_Help";
+            this.editMeMenuItem3 = new Terminal.Gui.MenuItem();
+            this.editMeMenuItem3.Title = "Edit Me";
+            this.editMeMenuItem3.Data = "editMeMenuItem3";
+            this.helpMenu.Children = new Terminal.Gui.MenuItem[] {
+                    this.editMeMenuItem3};
             this.menuBar.Menus = new Terminal.Gui.MenuBarItem[] {
-                    this.fileF9Menu};
+                    this.fileMenu,
+                    this.editMenu,
+                    this.helpMenu};
             this.Add(this.menuBar);
         }
     }
