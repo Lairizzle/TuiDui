@@ -5,13 +5,8 @@
     "IsComplete": false
   },
   {
-    "Title": "I want to update this one",
-    "Date": "0001-01-01T00:00:00",
-    "IsComplete": false
-  },
-  {
     "Title": "Finish TUI project",
-    "Date": "0001-01-01T00:00:00",
+    "Date": "3030-01-20T00:00:00",
     "IsComplete": false
   },
   {
@@ -26,11 +21,6 @@
   },
   {
     "Title": "Enter your to-do",
-    "Date": "1988-04-20T00:00:00",
-    "IsComplete": false
-  },
-  {
-    "Title": "It is my birthday",
     "Date": "1988-04-20T00:00:00",
     "IsComplete": false
   },
@@ -50,23 +40,8 @@
     "IsComplete": false
   },
   {
-    "Title": "dffa",
-    "Date": "0001-01-01T00:00:00",
-    "IsComplete": false
-  },
-  {
     "Title": "Or this one",
     "Date": "0001-01-01T00:00:00",
-    "IsComplete": false
-  },
-  {
-    "Title": "I am adding one more",
-    "Date": "0001-01-01T00:00:00",
-    "IsComplete": false
-  },
-  {
-    "Title": "Thisfdsfa is mye event",
-    "Date": null,
     "IsComplete": false
   }
 ]

@@ -115,11 +115,16 @@ namespace TuiDui
 
         private void RefreshTodoList(int preserveIndex = 0)
         {
+            int selected = todoListEvents.SelectedItem;
+            int top = todoListEvents.TopItem;
+
             var todos = _todoManager.GetTodoList();
             todoListEvents.SetSource(_todoManager.GetTodoDisplayList());
 
             if (todos.Count > 0)
                 todoListEvents.SelectedItem = Math.Min(preserveIndex, todos.Count - 1);
+
+            todoListEvents.TopItem = Math.Min(top, Math.Max(0, todos.Count - 1));
         }
 
         private (string Title, DateTime? Date)? ValidateTodoInputs()
