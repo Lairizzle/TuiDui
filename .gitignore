@@ -1,0 +1,42 @@
+# Build folders
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE / Editor
+.vscode/
+.vs/
+.idea/
+
+# NuGet
+*.nupkg
+packages/
+*.snupkg
+project.lock.json
+*.nuget.props
+*.nuget.targets
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# dotnet watch / Rider caches
+.dotnet/
+
+# Optional: if you generate SQLite or other local DBs
+*.db
+*.sqlite
+
