@@ -1,12 +1,46 @@
 [
   {
-    "Title": "Buy groceries",
-    "Note": "This is my long note, I want it to show.",
-    "Date": "2025-12-02T12:00:00"
+    "Title": "Title",
+    "Note": "Prepare points for today\u2019s standup: progress, blockers, next dfasfdsafddasteps."
   },
   {
-    "Title": "Buy groceries",
-    "Note": "This is my other note I want it to show also.",
-    "Date": "2025-12-02T12:00:00"
+    "Title": "Shopping Lists",
+    "Note": "I updated my list.\nEggs, milk, bread, cheese, apples, coffee."
+  },
+  {
+    "Title": "Title",
+    "Note": "Finish \u0027Clean Code\u0027 and start \u0027The Pragmatic Programmer\u0027.\n\n\n\nI want to update this, it\u0027s going to change the title but oh well.\n\nWhat can you do?"
+  },
+  {
+    "Title": "Workout Plan",
+    "Note": "Monday: Chest \u002B Triceps, Tuesday: Back \u002B Biceps, Wednesday: Legs.\nI need to add to this\n\nSo here is some additional notes.\n\nI know its good.\nOK"
+  },
+  {
+    "Title": "Project Ideas",
+    "Note": "1. TUI habit tracker\n2. CLI password manager\n3. Simple note sync app."
+  },
+  {
+    "Title": "Meeting Notes",
+    "Note": "Client requested weekly reports. Update dashboard accordingly."
+  },
+  {
+    "Title": "Reminder",
+    "Note": "Renew domain before the 10th to avoid downtime."
+  },
+  {
+    "Title": "This my new one.",
+    "Note": "This note is the best note. I know it is.\n\nThanks."
+  },
+  {
+    "Title": "NewNote",
+    "Note": "Heyfdsafdsafd\n\ndlkfjdlksajfkl\n\njkldjflkdsjafdasijkjdkljafdaaa\n\na\ndkdjfklasdjdflkdsajiajfdkajfaii"
+  },
+  {
+    "Title": "My New Note",
+    "Note": "This is a note that I\u0027m going to add."
+  },
+  {
+    "Title": "My new note",
+    "Note": "Heya"
   }
-] 
+]

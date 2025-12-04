@@ -5,21 +5,44 @@ namespace TuiDui
     public partial class MainDialog
     {
         private readonly TodoEventManager _todoManager;
+        private readonly NoteEventManager _noteManager;
+        private int _selectedTodoIndex = -1;
+        private int _selectedNoteIndex = -1;
+
+        private enum ActiveList
+        {
+            Todo,
+            Note,
+            None
+        }
+
+        private enum ActiveFrame
+        {
+            TodoFrame,
+            NoteFrame,
+            None
+        }
+
+        private ActiveList _activeList = ActiveList.None;
+        private ActiveFrame _activeFrame = ActiveFrame.None;
 
         public MainDialog()
         {
             InitializeComponent();
+
             _todoManager = new TodoEventManager();
-            LoadTodoEvents();
-            LoadTodoHandlers();
+            _noteManager = new NoteEventManager();
+            LoadData();
+            LoadHandlers();
         }
 
-        private void LoadTodoEvents()
+        private void LoadData()
         {
             todoListEvents.SetSource(_todoManager.GetTodoDisplayList());
+            noteListEvents.SetSource(_noteManager.GetNoteDisplayList());
         }
 
-        private void LoadTodoHandlers()
+        private void LoadHandlers()
         {
             //List Handlers
             todoListEvents.SelectedItemChanged += OnSelected;
@@ -30,51 +53,61 @@ namespace TuiDui
             noteListEvents.KeyPress += OnListKeyPressed;
 
             //Buttons Handlers
-            addTodoEvent.Clicked += OnAddClicked;
-            updateTodoEvent.Clicked += OnUpdateTodoEventClicked;
+            addTodoEvent.Clicked += () => OnAddClicked("todo");
+            saveNote.Clicked += () => OnAddClicked("note");
+            updateTodoEvent.Clicked += () => OnUpdateEventClicked("todo");
+            updateNote.Clicked += () => OnUpdateEventClicked("note");
 
             //Formatting
             todoDateText.Enter += e => { todoDateText.Text = ""; };
+
+            todoListEvents.Enter += (_) => _activeList = ActiveList.Todo;
+            noteListEvents.Enter += (_) => _activeList = ActiveList.Note;
+            toDoEntry.Enter += (_) => _activeFrame = ActiveFrame.TodoFrame;
+            noteEntryFrame.Enter += (_) => _activeFrame = ActiveFrame.NoteFrame;
+
         }
 
         private void OnSelected(ListViewItemEventArgs args)
         {
-            int index = GetIndex();
+            int index = args.Item;
             var item = GetItem(index);
+            if (item == null) return;
 
-            if (todoListEvents.HasFocus)
+            switch (_activeList)
             {
-                if (item is TodoItem todo)
-                {
-                    todoEventText.Text = todo.Title;
+                case ActiveList.Todo:
+                    _selectedTodoIndex = index;
+                    if (item is TodoItem todo)
+                    {
+                        todoEventText.Text = todo.Title;
+                        todoDateText.Text = todo.Date?.ToString("MM/dd/yyyy") ?? string.Empty;
+                    }
+                    break;
 
-                    if (todo.Date.HasValue)
-                        todoDateText.Text = todo.Date.Value.ToString("MM/dd/yyyy");
-                    else
-                        todoDateText.Text = string.Empty;
-                }
-                return;
-            }
-
-            if (noteListEvents.HasFocus)
-            {
-                if (item is NoteItem note)
-                {
-                    // Fill in your note UI here, example:
-                    //noteTitleText.Text = note.Title;
-                    //noteBodyText.Text = note.Body ?? "";
-                }
-                return;
+                case ActiveList.Note:
+                    _selectedNoteIndex = index;
+                    if (item is NoteItem note)
+                    {
+                        noteTextView.Text = note.Note;
+                    }
+                    break;
             }
         }
 
         private void OnListKeyPressed(View.KeyEventEventArgs e)
         {
-            int index = GetIndex();
-            var item = GetItem(index);
-
             if (e.KeyEvent.Key == Key.DeleteChar)
             {
+                int index = GetIndex();
+                var item = GetItem(index);
+
+                if (item == null)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
                 var n = MessageBox.Query("Delete?", $"Delete '{item.Title}'?", "Yes", "No");
                 if (n == 0)
                 {
@@ -86,11 +119,14 @@ namespace TuiDui
 
                     if (item is NoteItem)
                     {
-
+                        _noteManager.DeleteNoteAt(index);
+                        _noteManager.SaveNotes();
+                        noteTextView.Text = "";
                     }
 
                     RefreshList(index);
                 }
+
                 e.Handled = true;
             }
         }
@@ -99,95 +135,182 @@ namespace TuiDui
         {
             int index = GetIndex();
             var item = GetItem(index);
-
-            if (item is TodoItem)
+            if (todoListEvents.HasFocus)
             {
-                _todoManager.ToggleTodoCompletion(index);
-                _todoManager.SaveTodos();
+                if (item is TodoItem)
+                {
+                    _todoManager.ToggleTodoCompletion(index);
+                    _todoManager.SaveTodos();
+                }
+            }
+            else if (noteListEvents.HasFocus)
+            {
+                if (item is NoteItem)
+                    return;
             }
 
-            if (item is NoteItem)
-            { }
-
             RefreshList(index);
         }
 
-        private void OnAddClicked()
+        private void OnAddClicked(string type)
         {
-            var result = ValidateInputs();
-            if (result == null)
-                return;
+            switch (type)
+            {
+                case "todo":
+                    var todoResult = ValidateTodoInputs();
+                    if (todoResult == null) return;
 
-            var (title, date) = result.Value;
+                    var (title, date) = todoResult.Value;
+                    _todoManager.AddTodo(title, date);
+                    RefreshList(_todoManager.GetTodoList().Count - 1);
+                    break;
 
-            _todoManager.AddTodo(title, date);
-            RefreshList(_todoManager.GetTodoList().Count - 1);
+                case "note":
+                    var noteResult = ValidateNoteInputs();
+                    if (noteResult == null) return;
+
+                    var (noteTitle, body) = noteResult.Value;
+                    _noteManager.AddNote(noteTitle, body);
+                    RefreshList(_noteManager.GetNoteList().Count - 1);
+                    break;
+            }
         }
 
-        private void OnUpdateTodoEventClicked()
+        private void OnUpdateEventClicked(string type)
         {
-            var result = ValidateInputs();
-            int index = GetIndex();
+            switch (type)
+            {
+                case "todo":
+                    var todoResult = ValidateTodoInputs();
+                    if (todoResult == null || _selectedTodoIndex < 0) return;
 
-            if (index == -1)
-                return;
+                    var (title, date) = todoResult.Value;
+                    _todoManager.EditTodo(_selectedTodoIndex, title, date);
+                    RefreshList(_selectedTodoIndex);
+                    break;
 
-            if (result == null)
-                return;
+                case "note":
+                    var noteResult = ValidateNoteInputs(_noteManager.GetNoteList()[_selectedNoteIndex].Title);
+                    if (noteResult == null || _selectedNoteIndex < 0) return;
 
-            var (title, date) = result.Value;
+                    var (noteTitle, body) = noteResult.Value;
+                    _noteManager.EditNote(_selectedNoteIndex, noteTitle, body);
+                    RefreshList(_selectedNoteIndex);
+                    break;
+            }
+        }
 
-            _todoManager.EditTodo(index, title, date);
-            RefreshList(index);
+
+        private string? PromptForNoteTitle(string defaultTitle = "")
+        {
+            string? result = null;
+
+            var dialog = new Dialog("Enter Note Title", 60, 10);
+
+            var titleField = new TextField(defaultTitle) { X = 1, Y = 1, Width = 40 };
+            dialog.Add(titleField);
+
+            var okButton = new Button("OK");
+            okButton.Clicked += () => { result = titleField.Text?.ToString().Trim(); Application.RequestStop(); };
+            dialog.AddButton(okButton);
+
+            var cancelButton = new Button("Cancel");
+            cancelButton.Clicked += () => { result = null; Application.RequestStop(); };
+            dialog.AddButton(cancelButton);
+
+            Application.Run(dialog);
+
+            if (string.IsNullOrEmpty(result))
+                return null;
+
+            return result;
         }
 
         private int GetIndex()
         {
-            int index = 0;
-
-            if (todoListEvents.HasFocus)
+            switch (_activeList)
             {
-                index = todoListEvents.SelectedItem;
+                case ActiveList.Todo:
+                    return _todoManager.GetTodoList().Count > 0
+                        ? todoListEvents.SelectedItem
+                        : -1;
+
+                case ActiveList.Note:
+                    return _noteManager.GetNoteList().Count > 0
+                        ? noteListEvents.SelectedItem
+                        : -1;
+
+                default:
+                    return -1;
             }
-
-            if (noteListEvents.HasFocus)
-            {
-                index = noteListEvents.SelectedItem;
-            }
-
-            if (index < 0)
-                return -1;
-
-            return index;
         }
 
-        private ISelectableItem GetItem(int index)
+        private ISelectableItem? GetItem(int index)
         {
-            var item = _todoManager.GetTodoList()[index];
-            return item;
+            if (index < 0)
+                return null;
+
+            switch (_activeList)
+            {
+                case ActiveList.Todo:
+                    {
+                        var list = _todoManager.GetTodoList();
+                        return index < list.Count ? list[index] : null;
+                    }
+
+                case ActiveList.Note:
+                    {
+                        var list = _noteManager.GetNoteList();
+                        return index < list.Count ? list[index] : null;
+                    }
+
+                default:
+                    return null;
+            }
         }
+
 
         private void RefreshList(int preserveIndex = 0)
         {
-            int selected = todoListEvents.SelectedItem;
-            int top = todoListEvents.TopItem;
+            switch (_activeList)
+            {
+                case ActiveList.Todo:
+                    {
+                        int top = todoListEvents.TopItem;
 
-            var todos = _todoManager.GetTodoList();
-            todoListEvents.SetSource(_todoManager.GetTodoDisplayList());
+                        var todos = _todoManager.GetTodoList();
+                        todoListEvents.SetSource(_todoManager.GetTodoDisplayList());
 
-            if (todos.Count > 0)
-                todoListEvents.SelectedItem = Math.Min(preserveIndex, todos.Count - 1);
+                        if (todos.Count > 0)
+                            todoListEvents.SelectedItem = Math.Min(preserveIndex, todos.Count - 1);
 
-            todoListEvents.TopItem = Math.Min(top, Math.Max(0, todos.Count - 1));
+                        todoListEvents.TopItem = Math.Min(top, Math.Max(0, todos.Count - 1));
+                        break;
+                    }
+
+                case ActiveList.Note:
+                    {
+                        int top = noteListEvents.TopItem;
+
+                        var notes = _noteManager.GetNoteList();
+                        noteListEvents.SetSource(_noteManager.GetNoteDisplayList());
+
+                        if (notes.Count > 0)
+                            noteListEvents.SelectedItem = Math.Min(preserveIndex, notes.Count - 1);
+
+                        noteListEvents.TopItem = Math.Min(top, Math.Max(0, notes.Count - 1));
+                        break;
+                    }
+            }
         }
 
-        private (string Title, DateTime? Date)? ValidateInputs()
+        private (string Title, DateTime? Date)? ValidateTodoInputs()
         {
             string title = todoEventText.Text?.ToString().Trim();
             if (string.IsNullOrEmpty(title))
             {
                 MessageBox.ErrorQuery("Error", "Title cannot be empty.", "Ok");
-                return null; // return null on invalid input
+                return null;
             }
 
             DateTime? date = null;
@@ -199,11 +322,22 @@ namespace TuiDui
                 else
                 {
                     MessageBox.ErrorQuery("Error", "Invalid date format, use MM/dd/YYYY/", "Ok");
-                    return null; // return null on invalid input
+                    return null;
                 }
             }
 
             return (title, date);
         }
+
+        private (string Title, string Note)? ValidateNoteInputs(string defaultTitle = "")
+        {
+            string? title = PromptForNoteTitle(defaultTitle);
+            if (title == null) return null;
+
+            string noteBody = noteTextView.Text?.ToString().Trim() ?? "";
+
+            return (title, noteBody);
+        }
+
     }
 }

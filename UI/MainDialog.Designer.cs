@@ -33,7 +33,7 @@ namespace TuiDui {
         
         private Terminal.Gui.FrameView noteEntryFrame;
         
-        private Terminal.Gui.TextView noteTextField;
+        private Terminal.Gui.TextView noteTextView;
         
         private Terminal.Gui.FrameView toDoEntry;
         
@@ -52,6 +52,10 @@ namespace TuiDui {
         private Terminal.Gui.FrameView toDoFrame;
         
         private Terminal.Gui.ListView todoListEvents;
+        
+        private Terminal.Gui.Button saveNote;
+        
+        private Terminal.Gui.Button updateNote;
         
         private Terminal.Gui.StatusBar statusBar;
         
@@ -74,6 +78,8 @@ namespace TuiDui {
         private void InitializeComponent() {
             this.menuBar = new Terminal.Gui.MenuBar();
             this.statusBar = new Terminal.Gui.StatusBar();
+            this.updateNote = new Terminal.Gui.Button();
+            this.saveNote = new Terminal.Gui.Button();
             this.todoListEvents = new Terminal.Gui.ListView();
             this.toDoFrame = new Terminal.Gui.FrameView();
             this.updateTodoEvent = new Terminal.Gui.Button();
@@ -83,7 +89,7 @@ namespace TuiDui {
             this.todoDateText = new Terminal.Gui.TextView();
             this.label = new Terminal.Gui.Label();
             this.toDoEntry = new Terminal.Gui.FrameView();
-            this.noteTextField = new Terminal.Gui.TextView();
+            this.noteTextView = new Terminal.Gui.TextView();
             this.noteEntryFrame = new Terminal.Gui.FrameView();
             this.noteListEvents = new Terminal.Gui.ListView();
             this.noteListFrame = new Terminal.Gui.FrameView();
@@ -102,9 +108,9 @@ namespace TuiDui {
             this.blueOnBlack = new Terminal.Gui.ColorScheme();
             this.blueOnBlack.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightBlue, Terminal.Gui.Color.Black);
             this.blueOnBlack.HotNormal = new Terminal.Gui.Attribute(Terminal.Gui.Color.Cyan, Terminal.Gui.Color.Black);
-            this.blueOnBlack.Focus = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightBlue, Terminal.Gui.Color.BrightYellow);
-            this.blueOnBlack.HotFocus = new Terminal.Gui.Attribute(Terminal.Gui.Color.Cyan, Terminal.Gui.Color.BrightYellow);
-            this.blueOnBlack.Disabled = new Terminal.Gui.Attribute(Terminal.Gui.Color.Gray, Terminal.Gui.Color.Black);
+            this.blueOnBlack.Focus = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightBlue, Terminal.Gui.Color.DarkGray);
+            this.blueOnBlack.HotFocus = new Terminal.Gui.Attribute(Terminal.Gui.Color.Cyan, Terminal.Gui.Color.DarkGray);
+            this.blueOnBlack.Disabled = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightBlue, Terminal.Gui.Color.DarkGray);
             this.greenOnBlack = new Terminal.Gui.ColorScheme();
             this.greenOnBlack.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.Green, Terminal.Gui.Color.Black);
             this.greenOnBlack.HotNormal = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightGreen, Terminal.Gui.Color.Black);
@@ -152,9 +158,9 @@ namespace TuiDui {
             this.noteListFrame.Title = "Notes";
             this.Add(this.noteListFrame);
             this.noteListEvents.Width = 21;
-            this.noteListEvents.Height = 3;
-            this.noteListEvents.X = 1;
-            this.noteListEvents.Y = 0;
+            this.noteListEvents.Height = 45;
+            this.noteListEvents.X = 2;
+            this.noteListEvents.Y = -1;
             this.noteListEvents.Visible = true;
             this.noteListEvents.Data = "noteListEvents";
             this.noteListEvents.TextAlignment = Terminal.Gui.TextAlignment.Left;
@@ -166,7 +172,7 @@ namespace TuiDui {
             this.noteListEvents.AllowsMultipleSelection = true;
             this.noteListFrame.Add(this.noteListEvents);
             this.noteEntryFrame.Width = 80;
-            this.noteEntryFrame.Height = 46;
+            this.noteEntryFrame.Height = 45;
             this.noteEntryFrame.X = 27;
             this.noteEntryFrame.Y = 1;
             this.noteEntryFrame.Visible = true;
@@ -178,19 +184,19 @@ namespace TuiDui {
             this.noteEntryFrame.TextAlignment = Terminal.Gui.TextAlignment.Left;
             this.noteEntryFrame.Title = "Editor";
             this.Add(this.noteEntryFrame);
-            this.noteTextField.Width = 76;
-            this.noteTextField.Height = 44;
-            this.noteTextField.X = 1;
-            this.noteTextField.Y = 0;
-            this.noteTextField.Visible = true;
-            this.noteTextField.ColorScheme = this.blueOnBlackText;
-            this.noteTextField.AllowsTab = false;
-            this.noteTextField.AllowsReturn = true;
-            this.noteTextField.WordWrap = true;
-            this.noteTextField.Data = "noteTextField";
-            this.noteTextField.Text = "";
-            this.noteTextField.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.noteEntryFrame.Add(this.noteTextField);
+            this.noteTextView.Width = 76;
+            this.noteTextView.Height = 43;
+            this.noteTextView.X = 1;
+            this.noteTextView.Y = 0;
+            this.noteTextView.Visible = true;
+            this.noteTextView.ColorScheme = this.blueOnBlackText;
+            this.noteTextView.AllowsTab = false;
+            this.noteTextView.AllowsReturn = true;
+            this.noteTextView.WordWrap = true;
+            this.noteTextView.Data = "noteTextView";
+            this.noteTextView.Text = "Heya";
+            this.noteTextView.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.noteEntryFrame.Add(this.noteTextView);
             this.toDoEntry.Width = 102;
             this.toDoEntry.Height = 6;
             this.toDoEntry.X = 108;
@@ -293,14 +299,35 @@ namespace TuiDui {
             this.todoListEvents.AllowsMarking = false;
             this.todoListEvents.AllowsMultipleSelection = true;
             this.toDoFrame.Add(this.todoListEvents);
+            this.saveNote.Width = 13;
+            this.saveNote.Height = 1;
+            this.saveNote.X = 27;
+            this.saveNote.Y = 46;
+            this.saveNote.Visible = true;
+            this.saveNote.Data = "saveNote";
+            this.saveNote.Text = "Save Note";
+            this.saveNote.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.saveNote.IsDefault = false;
+            this.Add(this.saveNote);
+            this.updateNote.Width = 15;
+            this.updateNote.Height = 1;
+            this.updateNote.X = 41;
+            this.updateNote.Y = 46;
+            this.updateNote.Visible = true;
+            this.updateNote.Data = "updateNote";
+            this.updateNote.Text = "Update Note";
+            this.updateNote.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.updateNote.IsDefault = false;
+            this.Add(this.updateNote);
             this.statusBar.Width = Dim.Fill(0);
             this.statusBar.Height = 1;
             this.statusBar.X = 0;
             this.statusBar.Y = Pos.AnchorEnd(1);
             this.statusBar.Visible = true;
+            this.statusBar.ColorScheme = this.blueOnBlack;
             this.statusBar.Data = "statusBar";
-            this.statusBar.Text = "";
-            this.statusBar.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.statusBar.Text = "Text Mode";
+            this.statusBar.TextAlignment = Terminal.Gui.TextAlignment.Centered;
             this.f1EditMe = new Terminal.Gui.StatusItem(((Terminal.Gui.Key)(1048588u)), "F1 - Edit Me", null);
             this.statusBar.Items = new Terminal.Gui.StatusItem[] {
                     this.f1EditMe};
